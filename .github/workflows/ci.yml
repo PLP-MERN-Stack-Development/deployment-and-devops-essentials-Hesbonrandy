@@ -12,8 +12,8 @@ jobs:
           node-version: 18
 
       # Build Vite frontend
-      - name: Install and build frontend
-        run: cd frontend && npm ci && npm run build
+      - - name: Install and build frontend (Vite in root)
+          run: npm ci && npm run build
 
       # Install backend dependencies
       - name: Install backend dependencies

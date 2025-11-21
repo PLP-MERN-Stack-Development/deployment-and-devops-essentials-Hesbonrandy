@@ -1,77 +1,85 @@
-# Deployment and DevOps for MERN Applications
+# ☕ MonRan Coffee House – Digital Coffee Ordering System
 
-This assignment focuses on deploying a full MERN stack application to production, implementing CI/CD pipelines, and setting up monitoring for your application.
+A full-featured MERN app for remote workers in Kinoo to order artisanal coffee online — with real-time staff order management.
 
-## Assignment Overview
+![MonRan UI](./screenshots/app-screenshot.png)
 
-You will:
-1. Prepare your MERN application for production deployment
-2. Deploy the backend to a cloud platform
-3. Deploy the frontend to a static hosting service
-4. Set up CI/CD pipelines with GitHub Actions
-5. Implement monitoring and maintenance strategies
+---
 
-## Getting Started
+## 🌐 Live Applications
 
-1. Accept the GitHub Classroom assignment invitation
-2. Clone your personal repository that was created by GitHub Classroom
-3. Follow the setup instructions in the `Week7-Assignment.md` file
-4. Use the provided templates and configuration files as a starting point
+- **Frontend (Netlify)**: [https://monran-coffee-house.netlify.app](https://monran-coffee-house.netlify.app)  
+- **Backend API (Render)**: [https://mern-monran.onrender.com](https://mern-monran.onrender.com)
 
-## Files Included
+> ✅ Fully live, HTTPS-enabled, and publicly accessible.
 
-- `Week7-Assignment.md`: Detailed assignment instructions
-- `.github/workflows/`: GitHub Actions workflow templates
-- `deployment/`: Deployment configuration files and scripts
-- `.env.example`: Example environment variable templates
-- `monitoring/`: Monitoring configuration examples
+---
 
-## Requirements
+## 🛠️ Tech Stack
 
-- A completed MERN stack application from previous weeks
-- Accounts on the following services:
-  - GitHub
-  - MongoDB Atlas
-  - Render, Railway, or Heroku (for backend)
-  - Vercel, Netlify, or GitHub Pages (for frontend)
-- Basic understanding of CI/CD concepts
+- **Frontend**: React (Vite), React Router, Axios
+- **Backend**: Node.js, Express, MongoDB (Mongoose)
+- **Authentication**: JWT (JSON Web Tokens)
+- **Database**: MongoDB Atlas
+- **Hosting**: 
+  - Frontend → **Netlify**
+  - Backend → **Render**
+- **CI/CD**: GitHub Actions
+- **Styling**: Custom CSS with MonRan brand colors (`#6F4E37` coffee brown, `#E6C588` cream)
 
-## Deployment Platforms
+---
 
-### Backend Deployment Options
-- **Render**: Easy to use, free tier available
-- **Railway**: Developer-friendly, generous free tier
-- **Heroku**: Well-established, extensive documentation
+## 🚀 Deployment Instructions
 
-### Frontend Deployment Options
-- **Vercel**: Optimized for React apps, easy integration
-- **Netlify**: Great for static sites, good CI/CD
-- **GitHub Pages**: Free, integrated with GitHub
+### Backend (Render)
+1. Push code to `main` branch
+2. In [Render Dashboard](https://render.com):
+   - Create **New → Web Service**
+   - Connect `https://github.com/Hesbonrandy/mern-MonRan.git`
+   - Build command: `npm install`
+   - Start command: `npm start`
+   - Set environment variables:
+     - `MONGO_URI`: MongoDB Atlas connection string
+     - `JWT_SECRET`: Strong secret (e.g., 32+ random chars)
+   - Health check path: `/api/health`
 
-## CI/CD Pipeline
+### Frontend (Netlify)
+1. Import repo into [Netlify](https://app.netlify.com)
+2. Set:
+   - **Build command**: `npm run build`
+   - **Publish directory**: `frontend/dist`
+3. Add environment variable:
+   - Key: `VITE_API_URL`
+   - Value: `https://mern-monran.onrender.com`
 
-The assignment includes templates for setting up GitHub Actions workflows:
-- `frontend-ci.yml`: Tests and builds the React application
-- `backend-ci.yml`: Tests the Express.js backend
-- `frontend-cd.yml`: Deploys the frontend to your chosen platform
-- `backend-cd.yml`: Deploys the backend to your chosen platform
+> 🔒 Vite only exposes variables prefixed with `VITE_`.
 
-## Submission
+---
 
-Your work will be automatically submitted when you push to your GitHub Classroom repository. Make sure to:
+## 🔁 CI/CD Pipeline (GitHub Actions)
 
-1. Complete all deployment tasks
-2. Set up CI/CD pipelines with GitHub Actions
-3. Deploy both frontend and backend to production
-4. Document your deployment process in the README.md
-5. Include screenshots of your CI/CD pipeline in action
-6. Add URLs to your deployed applications
+Automated on every `push` or `pull_request` to `main`:
 
-## Resources
+- Installs backend dependencies
+- Builds Vite frontend (`vite build`)
+- Validates deployability
 
-- [GitHub Actions Documentation](https://docs.github.com/en/actions)
-- [MongoDB Atlas Documentation](https://docs.atlas.mongodb.com/)
-- [Render Documentation](https://render.com/docs)
-- [Railway Documentation](https://docs.railway.app/)
-- [Vercel Documentation](https://vercel.com/docs)
-- [Netlify Documentation](https://docs.netlify.com/) 
+### 🖼️ CI Pipeline in Action
+
+![CI Success](./screenshots/ci-pipeline.png)
+
+> 💡 To capture:  
+> 1. Go to your repo → **Actions** tab  
+> 2. Run a workflow  
+> 3. Screenshot the green success → save as `screenshots/ci-pipeline.png`
+
+---
+
+## 📊 Monitoring Setup
+
+### Built-in Monitoring
+- **Health Check Endpoint**:  
+  `GET https://mern-monran.onrender.com/api/health`  
+  Returns:
+  ```json
+  { "status": "OK", "uptime": 1234.5 }
