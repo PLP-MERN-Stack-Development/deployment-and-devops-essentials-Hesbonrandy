@@ -1,12 +1,23 @@
 name: CI - MonRan Coffee House
+
 on: [push]
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 18
+
       - run: npm ci
-      - run: cd client && npm ci && npm run build
+        continue-on-error: true   # prevents failure if backend has no package.json
+
+      - run: npm ci
+        working-directory: client
+        
+      - run: npm run build
+        working-directory: client
