@@ -1,26 +1,12 @@
 name: CI - MonRan Coffee House
-
-on: [push, pull_request]
-
+on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js 18
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: 'npm'
-          cache-dependencies-path: |
-            package-lock.json
-            client/package-lock.json
-
-      - name: Install backend dependencies
-        run: npm ci
-
-      - name: Build Vite frontend
-        run: cd client && npm ci && npm run build
+      - run: npm ci
+      - run: cd client && npm ci && npm run build
