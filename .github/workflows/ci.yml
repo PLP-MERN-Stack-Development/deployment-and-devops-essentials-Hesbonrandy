@@ -1,0 +1,20 @@
+name: CI - MonRan Coffee House
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      # Build Vite frontend
+      - name: Install and build frontend
+        run: cd frontend && npm ci && npm run build
+
+      # Install backend dependencies
+      - name: Install backend dependencies
+        run: npm ci
