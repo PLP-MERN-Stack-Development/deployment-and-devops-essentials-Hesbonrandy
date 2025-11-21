@@ -10,17 +10,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node.js 18
         uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: 'npm'
+          cache-dependencies-path: |
+            package-lock.json
+            client/package-lock.json
+
+      - name: Install backend dependencies
+        run: npm ci
+
+      - name: Check if client/package.json exists
+        run: ls -la client/
 
       - name: Install frontend dependencies
         run: cd client && npm ci
 
-      - name: Build frontend (Vite)
+      - name: Build Vite frontend
         run: cd client && npm run build
-
-      - name: Install backend dependencies
-        run: npm ci
